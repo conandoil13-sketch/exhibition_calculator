@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wallplot — 전시 벽면 계산기</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div class="brand"><span class="brand-mark">W</span><span>WALLPLOT</span></div>
+        <div class="sidebar-label">PROJECT</div>
+        <div class="project-card"><div class="project-dot"></div><div class="project-info"><strong>새 전시 프로젝트</strong><small id="archiveStatus">아카이브 0개</small></div><button id="saveArchive" class="archive-button">PNG 저장</button></div>
+        <nav class="nav"><a class="active" href="#planner"><span>✣</span> 배치 플래너</a></nav>
+      </aside>
+
+      <main class="main-content" id="planner">
+        <header class="topbar"><div><div class="eyebrow">EXHIBITION PLANNER / 01</div><h1>벽면 배치 플래너</h1><p class="intro">작품의 판형과 수량을 입력하면 필요한 벽면과 배치를 한눈에 확인할 수 있어요.</p></div><button class="icon-button" aria-label="설정">⚙</button></header>
+
+        <section class="mode-row">
+          <div class="mode-switch" role="tablist" aria-label="계산 모드"><button class="mode active" data-mode="free">벽 제한 없이 계산</button><button class="mode" data-mode="limited">벽 포함 계산</button></div>
+          <div class="unit-control"><span>단위</span><select id="unitSelect"><option value="mm">mm</option><option value="cm">cm</option></select></div>
+        </section>
+
+        <div class="workspace-grid">
+          <section class="panel input-panel">
+            <div class="panel-heading"><div><span class="section-kicker">STEP 01</span><h2>작품 판형</h2></div><span class="count-pill" id="formatCount">0 formats</span></div>
+            <div id="formatList" class="format-list"></div>
+            <button id="addFormat" class="add-button"><span>＋</span> 판형 추가</button>
+            <div class="tip"><span>✦</span><p><strong>복합판형도 문제없어요</strong><br />A0–A5 프리셋 또는 사용자 지정 크기로 자유롭게 구성해보세요.</p></div>
+
+            <div class="settings-block" id="settings">
+              <div class="panel-heading compact"><div><span class="section-kicker">STEP 02</span><h2>배치 설정</h2></div></div>
+              <div class="field-grid"><label>작품 간 여백<input id="gapInput" type="number" min="0" value="120" /></label><label>벽 가장자리 여백<input id="marginInput" type="number" min="0" value="300" /></label><label>배치 단수<input id="rowCountInput" type="number" min="1" value="1" /></label><label>단 사이 여백<input id="rowGapInput" type="number" min="0" value="250" /></label><label>사람 키<input id="personHeight" type="number" min="1" value="1800" /></label></div>
+            </div>
+
+            <div class="walls-block hidden" id="wallsBlock"><div class="panel-heading compact"><div><span class="section-kicker">STEP 02B</span><h2>전시장 벽 목록</h2></div><button id="addWall" class="small-add">＋ 벽 추가</button></div><div id="wallList"></div></div>
+          </section>
+
+          <section class="panel preview-panel">
+            <div class="panel-heading preview-heading"><div><span class="section-kicker">LIVE PREVIEW</span><h2>배치 미리보기</h2></div><div class="preview-actions"><button id="downloadSvg" class="outline-button">↓ SVG</button><button id="resetBtn" class="text-button">초기화</button></div></div>
+            <div class="canvas-wrap"><svg id="layoutSvg" viewBox="0 0 900 620" role="img" aria-label="전시 벽면 배치 미리보기"></svg></div>
+            <div class="legend"><span><i class="legend-work"></i> 작품</span><span><i class="legend-wall"></i> 벽면</span><span><i class="legend-person"></i> 사람 (180cm)</span></div>
+            <div class="results"><div><span>필요 벽 길이</span><strong id="resultLength">—</strong><em id="resultLengthSub">전체 배치 기준</em></div><div><span>필요 벽 높이</span><strong id="resultHeight">—</strong><em>작품 + 여백 기준</em></div><div><span>작품 수</span><strong id="resultCount">0</strong><em id="resultCountSub">0개 판형</em></div></div>
+          </section>
+        </div>
+      </main>
+    </div>
+    <template id="formatTemplate"><div class="format-card"><div class="format-index">01</div><div class="format-fields"><div class="format-top"><select class="preset"><option value="A0">A0</option><option value="A1">A1</option><option value="A2">A2</option><option value="A3" selected>A3</option><option value="A4">A4</option><option value="A5">A5</option><option value="custom">사용자 지정</option></select><div class="orientation"><button class="orientation-btn active" data-orientation="portrait">세로</button><button class="orientation-btn" data-orientation="landscape">가로</button></div><button class="remove-format" aria-label="판형 삭제">×</button></div><div class="dimension-row"><label>가로 <input class="width-input" type="number" min="1" /></label><span>×</span><label>세로 <input class="height-input" type="number" min="1" /></label><span class="dimension-unit">mm</span></div><div class="format-bottom"><label>작품 수<input class="quantity-input" type="number" min="1" value="1" /></label><label>그룹명<input class="group-input" type="text" placeholder="예: 1수업" /></label></div></div></div></template>
+    <template id="wallTemplate"><div class="wall-row"><input class="wall-name" value="A벽" aria-label="벽 이름" /><label>너비<input class="wall-width" type="number" min="1" value="6000" /></label><label>높이<input class="wall-height" type="number" min="1" value="2400" /></label><button class="remove-wall" aria-label="벽 삭제">×</button></div></template>
+    <script src="app.js"></script>
+  </body>
+</html>
