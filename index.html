@@ -34,8 +34,10 @@
             <div class="tip"><span>✦</span><p><strong>복합판형도 문제없어요</strong><br />A0–A5 프리셋 또는 사용자 지정 크기로 자유롭게 구성해보세요.</p></div>
 
             <div class="settings-block" id="settings">
-              <div class="panel-heading compact"><div><span class="section-kicker">STEP 02</span><h2>배치 설정</h2></div></div>
-              <div class="field-grid"><label>작품 간 여백<input id="gapInput" type="number" min="0" value="120" /></label><label>벽 상단 여백<input id="marginInput" type="number" min="0" value="300" /></label><label>첫 작품 바닥 높이<input id="firstArtworkHeight" type="number" min="0" value="1200" /></label><label>배치 단수<input id="rowCountInput" type="number" min="1" value="1" /></label><label>단 사이 여백<input id="rowGapInput" type="number" min="0" value="250" /></label><label>사람 키<input id="personHeight" type="number" min="1" value="1800" /></label></div>
+              <div class="panel-heading compact"><div><span class="section-kicker">STEP 02</span><h2>배치 기준</h2></div></div>
+              <div class="setting-group"><div class="setting-group-heading"><strong>배치 구조</strong><span>작품 사이의 간격과 단수</span></div><div class="field-grid"><label>작품 간 여백<input id="gapInput" type="number" min="0" value="120" /></label><label>배치 단수<input id="rowCountInput" type="number" min="1" value="1" /></label><label>단 사이 여백<input id="rowGapInput" type="number" min="0" value="250" /></label></div></div>
+              <div class="setting-group"><div class="setting-group-heading"><strong>높이 기준</strong><span>바닥·상단·사람 크기</span></div><div class="field-grid"><label>첫 작품 바닥 높이<input id="firstArtworkHeight" type="number" min="0" value="1200" /></label><label>벽 상단 여백<input id="marginInput" type="number" min="0" value="300" /></label><label>사람 키<input id="personHeight" type="number" min="1" value="1800" /></label></div></div>
+              <div class="settings-note">입력한 높이 기준을 포함해 필요한 벽 크기와 미리보기 비율을 계산합니다.</div>
             </div>
 
             <div class="walls-block hidden" id="wallsBlock"><div class="panel-heading compact"><div><span class="section-kicker">STEP 02B</span><h2>전시장 벽 목록</h2></div><button id="addWall" class="small-add">＋ 벽 추가</button></div><div id="wallList"></div></div>
